@@ -7,7 +7,7 @@ const recipeDetails = require('./RecipeDetails');
 var fs = require('fs');
 var ssml = require('ssml-builder');
 const cardTitle = "Sanjeev Kapoor Recipes";
-
+var limit = 4;
 const imageObj = {
     smallImageUrl: "https://s3.amazonaws.com/jetairways/Alexa-Card-image-720x480.png",
     largeImageUrl: "https://s3.amazonaws.com/jetairways/Alexa-Card-image-1200x800.png"
@@ -16,7 +16,6 @@ const imageObj = {
 //Global Variables
 var currentContext = [];
 var currentObj = {};
-var sharedObj = {};
 var intentRequest = [];
 
 
@@ -68,41 +67,33 @@ const launchRequestHandler = function() {
 
 const userRepeatRecipeNameHandler = function() {
     currentObj = this;
+    console.log(currentObj);
+    console.log(currentObj.event.session);
+    currentObj.attributes['currentRecipeName'] = currentObj.event.request.intent.slots.recipeName.value;
+    console.log(currentObj.attributes['currentRecipeName'].toString());
     console.log('Inside userRepeatRecipeNameHandler');
     currentContext.push("userRepeatRecipeNameHandler");
-    var currentRecipeName = currentObj.event.request.intent.slots.recipeName.value
-    sharedObj['currentRecipeName'] = currentRecipeName;
     recipeDetails.getRecipeDetails(currentObj, function(recipeData) {
         currentObj.emit(':ask', recipeData.RecipeName + ', ' + recipeData.Description + '. It takes ' + recipeData.PrepTime + ' to prepare and' + recipeData.Cooktime + ' to cook. It can be served to' + recipeData.Serve + ' people. Do you want to hear the ingredients or go back to recipe options? ');
     });
     console.log(currentContext);
 }
 
-const getSearchedRecipes = function(currentObj, callback) {
-    if (currentContext[currentContext.length - 2] != "getSearchedRecipes") {
-        recipeDetails.searchRecipes(currentObj, function(recipesName, count) {
-            callback(recipesName, count);
-        });
-    } else {
-        currentObj.emit(userRepeatRecipeNameHandler);
-    }
-};
 
 const hearSearchedRecipes = function() {
     currentObj = this;
+    console.log(currentObj);
+    console.log(currentObj.event.session.sessionId);
     console.log('Inside hearSearchedRecipes');
     currentContext.push('hearSearchedRecipes');
     console.log(currentContext);
-    var recipeNameOrIngredientName = this.event.request.intent.slots.recipeOrIngredient.value;
-    sharedObj['recipeNameOrIngredientName'] = recipeNameOrIngredientName;
-    console.log(recipeNameOrIngredientName);
-    getSearchedRecipes(currentObj, function(recipesName, count) {
-        if (count > 1) {
-            currentObj.emit(':ask', 'Here are our top ' + count + 'recipes for' + recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
-        } else {
-            currentObj.emit(':ask', 'Here is our top' + count + 'recipes for' + recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
-        }
-    });
+    currentObj.attributes['countMore'] = 0;
+    currentObj.attributes['recipeNameOrIngredientName'] = currentObj.event.request.intent.slots.recipeOrIngredient.value;
+		recipeDetails.searchRecipes(currentObj, limit, function(recipesName, count) {
+			currentObj.emit(':ask', 'Here are our top  4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+		});
+
+
 
 
 };
@@ -126,6 +117,7 @@ const hearIngredients = function() {
     currentContext.push('hearIngredients');
     console.log('Inside hearIngredients');
     console.log(currentContext);
+    console.log(currentObj.attributes['recipeOrIngredient']);
     getIngredients(currentObj, function(ingredients) {
         var speech = new ssml();
         speech.say('To make this recipe, you will need, ' + ingredients);
@@ -239,9 +231,9 @@ const amazonRepeatHandler = function() {
     } else if (currentContext[currentContext.length - 1] == "hearSearchedRecipes") {
         getSearchedRecipes(currentObj, function(recipesName, count) {
             if (count > 1) {
-                currentObj.emit(':ask', 'Here are our top ' + count + 'recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+                currentObj.emit(':ask', 'Here are our top 4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
             } else {
-                currentObj.emit(':ask', 'Here is our top' + count + 'recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+                currentObj.emit(':ask', 'Here is our top' + count + 'recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
             }
         });
     }
@@ -255,9 +247,9 @@ const amazonPreviousHandler = function() {
     if (currentContext[currentContext.length - 1] == "userRepeatRecipeNameHandler") {
         getSearchedRecipes(currentObj, function(recipesName, count) {
             if (count > 1) {
-                currentObj.emit(':ask', 'Here are our top ' + count + 'recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+                currentObj.emit(':ask', 'Here are our top  4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
             } else {
-                currentObj.emit(':ask', 'Here is our top' + count + 'recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+                currentObj.emit(':ask', 'Here is our top' + count + 'recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
             }
         });
     }
@@ -277,17 +269,17 @@ const amazonStartOverHandler = function() {
 }
 
 
-const getMoreRecipes = function(currentObj, callback) {
-    recipeDetails.getRecipeDetails(this, function(recipesName, count) {
-        callback(recipesName.slice(4, recipesName.length), count);
-    });
-};
+
 
 const hearMoreRecipes = function() {
     currentObj = this;
-    getMoreRecipes(currentObj, function(moreRecipes, count) {
-        currentObj.emit(':ask', 'Here are more recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + moreRecipes + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+    currentObj.attributes['countMore'] += 4;
+    limit += 4;
+    recipeDetails.searchRecipes(currentObj, limit, function(searchedRecipes, count) {
+		currentObj.emit(':ask', 'Here are more 4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + searchedRecipes + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+           
     });
+
 };
 
 
@@ -389,4 +381,3 @@ handlers[intents.AmazonHelpIntent] = amazonHelpHandler;
 
 
 exports.handlers = handlers;
-module.exports.sharedObj = sharedObj;

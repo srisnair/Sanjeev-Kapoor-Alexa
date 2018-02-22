@@ -1,7 +1,7 @@
 [
 
     {
-        "RecipeName": "Paneer Butter Masala",
+        "RecipeName": "Aloo Paneer Butter Masala",
         "Description": " This versatile Indian cheese is used in an array of vegetarian recipes especially in North India. In this recipe chunks of fresh cottage cheese are cooked in a rich creamy onion tomato masala and a good dose of butter. This paneer butter masala recipe is a fool proof one and tastes great with any kind of roti or plain old jeera rice. If you like Indian vegetarian food this one will tick all the boxes for you.",
         "PrepTime": "10 minutes",
         "Cooktime": "23 minutes",
@@ -78,17 +78,17 @@
             }
         ],
         "Method": [{
-                "Step": "Heat three tablespoons butter with one teaspoon oil in a kadai. Add bay leaves, cloves, cinnamon, red chillies and half of the crushed coriander seeds. Sauté for half a minute "
+                "Step": "Heat three tablespoons butter with one teaspoon oil in a kadai. Add bay leaves, cloves, cinnamon, red chillies and half of the crushed coriander seeds. Sauté for half a minute. "
             },
             {
-                "Step": "Add onion and stir-fry for thirty seconds and add ginger paste and garlic paste. Cook for another thirty seconds. Add coriander powder, red chilli powder and tomatoes. Cook on high heat till oil leaves the masala. Pour the mixture "
+                "Step": "Add onion and stir-fry for thirty seconds and add ginger paste and garlic paste. Cook for another thirty seconds. Add coriander powder, red chilli powder and tomatoes. Cook on high heat till oil leaves the masala. Pour the mixture. "
 
             },
             {
-                "Step": "Heat the remaining butter in a non-stick, cook the pureed mixture for two minutes. Add paneer pieces and salt. Add half a cup of water. Cook covered on low heat for five minutes "
+                "Step": "Heat the remaining butter in a non-stick, cook the pureed mixture for two minutes. Add paneer pieces and salt. Add half a cup of water. Cook covered on low heat for five minutes. "
             },
             {
-                "Step": "Sprinkle kasoori methi and mix in lightly. Remove from heat and mix in cream. Serve hot, garnished with remaining crushed coriander seeds"
+                "Step": "Sprinkle kasoori methi and mix in lightly. Remove from heat and mix in cream. Serve hot, garnished with remaining crushed coriander seeds."
             }
         ],
         "NutritionInfo": {
@@ -102,7 +102,7 @@
 
     {
 
-        "RecipeName": "Butter Chicken Biryani",
+        "RecipeName": "Aloo Butter Chicken Biryani",
         "Description": " The cuisine is characterised by a profusion of dairy products in the form of malai, paneer and dahi. The dals are a speciality of this type of cuisine, made of whole pulses like black gram, green gram and Bengal gram.  They are cooked on slow fire, often simmered for hours till they turn creamy and then flavoured with spices and rounded off with malai for that rich finish. The food is simply delicious. ",
         "PrepTime": "3-3.30 hours",
         "Cooktime": "41-50 minutes",
@@ -143,16 +143,16 @@
             }
         ],
         "Method": [{
-                "Step": "Heat oil and butter in a non-stick pan. Add green chillies and some of the ginger, mix and sauté for 30 seconds"
+                "Step": "Heat oil and butter in a non-stick pan. Add green chillies and some of the ginger, mix and sauté for 30 seconds."
             },
             {
-                "Step": "Add mace and cardamoms, mix and sauté for a minute. Add onions, mix and sauté till golden"
+                "Step": "Add mace and cardamoms, mix and sauté for a minute. Add onions, mix and sauté till golden."
             },
             {
-                "Step": "Add ginger-garlic paste, mix and sauté for a minute. Add tomato puree and mix well"
+                "Step": "Add ginger-garlic paste, mix and sauté for a minute. Add tomato puree and mix well."
             },
             {
-                "Step": "Add chilli powder, mix, cover and cook for 8-10 minutes. Add 1 teaspoon garam masala powder, dried fenugreek leaves and salt, mix well and cook for 2-3 minutes"
+                "Step": "Add chilli powder, mix, cover and cook for 8-10 minutes. Add 1 teaspoon garam masala powder, dried fenugreek leaves and salt, mix well and cook for 2-3 minutes."
             }
         ],
         "NutritionInfo": {
@@ -164,7 +164,7 @@
         }
     },  {
 
-        "RecipeName": "Aloo Dum",
+        "RecipeName": "Aloo matar",
         "Description": "Why is it that when you are stuck at “what should we cook today” the answer is always “make some aloo!” Potatoes are like this…extremely popular and have multipurpose usage.",
 		"PrepTime": "16-20 minutes",
         "Cooktime": "21-25 minutes",
@@ -193,16 +193,16 @@
             }
         ],
         "Method": [{
-                "Step": "Heat oil in a non-stick pan. Add torn bay leaves and sauté. Add onion paste and sauté till golden"
+                "Step": "Heat oil in a non-stick pan. Add torn bay leaves and sauté. Add onion paste and sauté till golden."
             },
             {
-                "Step": "Add ginger-garlic paste and sauté on medium heat for 30 seconds. Add tomato puree and mix"
+                "Step": "Add ginger-garlic paste and sauté on medium heat for 30 seconds. Add tomato puree and mix."
             },
             {
-                "Step": "Add salt, turmeric powder, chilli powder, cumin powder and castor sugar, mix and cook for 7-8 minutes or till oil separates"
+                "Step": "Add salt, turmeric powder, chilli powder, cumin powder and castor sugar, mix and cook for 7-8 minutes or till oil separates."
             },
             {
-                "Step": "Add some water and mix. Add potatoes and mix well. Reduce heat and cook for 4-5 minutes"
+                "Step": "Add some water and mix. Add potatoes and mix well. Reduce heat and cook for 4-5 minutes."
             }
         ],
         "NutritionInfo": {
@@ -257,16 +257,293 @@
             }
         ],
         "Method": [{
-                "Step": "Grind onion, garlic and ginger"
+                "Step": "Grind onion, garlic and ginger."
             },
             {
-                "Step": "Heat oil in a nine stick pan, add cumin seeds and sauté till lightly browned"
+                "Step": "Heat oil in a nine stick pan, add cumin seeds and sauté till lightly browned."
             },
             {
-                "Step": "Cut thin batons of potatoes. Add the ground paste to the pan and sauté till lightly browned, stirring frequently"
+                "Step": "Cut thin batons of potatoes. Add the ground paste to the pan and sauté till lightly browned, stirring frequently."
             },
             {
-                "Step": "Add potatoes, salt and turmeric powder and mix"
+                "Step": "Add potatoes, salt and turmeric powder and mix."
+            }
+        ],
+        "NutritionInfo": {
+            "Calories": "276 Kcal",
+            "Carbohydrates": "28.4 gm",
+            "Protein": "10.74 gm",
+            "Fat": "12.75 gm",
+            "Other": "3.23"
+        }
+    },
+    {
+        "RecipeName": "Aloo Butter Masala",
+        "Description": " This versatile Indian cheese is used in an array of vegetarian recipes especially in North India. In this recipe chunks of fresh cottage cheese are cooked in a rich creamy onion tomato masala and a good dose of butter. This paneer butter masala recipe is a fool proof one and tastes great with any kind of roti or plain old jeera rice. If you like Indian vegetarian food this one will tick all the boxes for you.",
+        "PrepTime": "10 minutes",
+        "Cooktime": "23 minutes",
+        "Serve": 4,
+        "LevelOfCooking": "moderate",
+        "Taste": "Mild",
+        "Ingredients": [{
+
+                "Description": "Paneer (cottage cheese) cut into triangles 500 grams"
+            },
+            {
+                "Number": "2",
+                "Description": "Butter 5 tablespoons"
+            },
+            {
+                "Number": "3",
+                "Description": "Oil 1 teaspoon"
+            },
+            {
+                "Number": "4",
+                "Description": "Bay leaves 2"
+            },
+            {
+                "Number": "5",
+                "Description": "Cloves 2 "
+            },
+            {
+                "Number": "6",
+                "Description": "Cinnamon 2 one-inch"
+            },
+            {
+                "Number": "7",
+                "Description": "Dried red chillies broken 2 "
+            },
+            {
+                "Number": "8",
+                "Description": "Coriander seeds crushed 2 tablespoons "
+            },
+            {
+                "Number": "9",
+                "Description": "Onion sliced 1 medium "
+            },
+            {
+                "Number": "10",
+                "Description": "Ginger paste 2 teaspoons "
+            },
+            {
+                "Number": "11",
+                "Description": "Garlic paste 2 teaspoons "
+            },
+            {
+                "Number": "12",
+                "Description": "Coriander powder 1 teaspoon"
+            },
+            {
+                "Number": "13",
+                "Description": "Red chilli powder 1 teaspoon"
+            },
+            {
+                "Number": "14",
+                "Description": "Tomatoes chopped 5-6 medium "
+            },
+            {
+                "Number": "15",
+                "Description": "Salt to taste  "
+            },
+            {
+                "Number": "16",
+                "Description": "Kasoori methi crushed 1/2 teaspoon  "
+            },
+            {
+                "Number": "17",
+                "Description": "Fresh cream 2 tablespoons "
+            }
+        ],
+        "Method": [{
+                "Step": "Heat three tablespoons butter with one teaspoon oil in a kadai. Add bay leaves, cloves, cinnamon, red chillies and half of the crushed coriander seeds. Sauté for half a minute. "
+            },
+            {
+                "Step": "Add onion and stir-fry for thirty seconds and add ginger paste and garlic paste. Cook for another thirty seconds. Add coriander powder, red chilli powder and tomatoes. Cook on high heat till oil leaves the masala. Pour the mixture. "
+
+            },
+            {
+                "Step": "Heat the remaining butter in a non-stick, cook the pureed mixture for two minutes. Add paneer pieces and salt. Add half a cup of water. Cook covered on low heat for five minutes. "
+            },
+            {
+                "Step": "Sprinkle kasoori methi and mix in lightly. Remove from heat and mix in cream. Serve hot, garnished with remaining crushed coriander seeds."
+            }
+        ],
+        "NutritionInfo": {
+            "Calories": "2233 Kcal",
+            "Carbohydrates": "45.1 gm",
+            "Protein": "102.2 gm",
+            "Fat": "182.6 gm",
+            "Other": "0"
+        }
+    },
+
+    {
+
+        "RecipeName": "Aloo Chicken Biryani",
+        "Description": " The cuisine is characterised by a profusion of dairy products in the form of malai, paneer and dahi. The dals are a speciality of this type of cuisine, made of whole pulses like black gram, green gram and Bengal gram.  They are cooked on slow fire, often simmered for hours till they turn creamy and then flavoured with spices and rounded off with malai for that rich finish. The food is simply delicious. ",
+        "PrepTime": "3-3.30 hours",
+        "Cooktime": "41-50 minutes",
+        "Serve": 4,
+        "LevelOfCooking": "Easy",
+        "Taste": "Spicy",
+        "Ingredients": [{
+                "Number": "1",
+                "Description": "Tandoori chicken cut into pieces on bone and half cooked 750 grams"
+            },
+            {
+                "Number": "2",
+                "Description": "Cooked rice 3 cups "
+            },
+            {
+                "Number": "3",
+                "Description": "Oil 2-3 tablespoons"
+            },
+            {
+                "Number": "4",
+                "Description": "Butter 1/4 cup "
+            },
+            {
+                "Number": "5",
+                "Description": "Green chillies slit 2-3  "
+            },
+            {
+                "Number": "6",
+                "Description": "Ginger cut into strips 1 inch "
+            },
+            {
+                "Number": "7",
+                "Description": "Mace blade 1  "
+            },
+            {
+                "Number": "8",
+                "Description": "Green cardamoms 3-4"
+            }
+        ],
+        "Method": [{
+                "Step": "Heat oil and butter in a non-stick pan. Add green chillies and some of the ginger, mix and sauté for 30 seconds."
+            },
+            {
+                "Step": "Add mace and cardamoms, mix and sauté for a minute. Add onions, mix and sauté till golden."
+            },
+            {
+                "Step": "Add ginger-garlic paste, mix and sauté for a minute. Add tomato puree and mix well."
+            },
+            {
+                "Step": "Add chilli powder, mix, cover and cook for 8-10 minutes. Add 1 teaspoon garam masala powder, dried fenugreek leaves and salt, mix well and cook for 2-3 minutes."
+            }
+        ],
+        "NutritionInfo": {
+            "Calories": "2233 Kcal",
+            "Carbohydrates": "45.1 gm",
+            "Protein": "102.2 gm",
+            "Fat": "182.6 gm",
+            "Other": "0"
+        }
+    },  {
+
+        "RecipeName": "Aloo Dum",
+        "Description": "Why is it that when you are stuck at “what should we cook today” the answer is always “make some aloo!” Potatoes are like this…extremely popular and have multipurpose usage.",
+		"PrepTime": "16-20 minutes",
+        "Cooktime": "21-25 minutes",
+        "Serve": 4,
+        "LevelOfCooking": "Easy",
+        "Taste": "Mild",
+        "Ingredients": [{
+                "Number": "1",
+                "Description": "Baby potatoes boiled and peeled 12-16  "
+            },
+            {
+                "Number": "2",
+                "Description": "Oil 2 tablespoons  "
+            },
+            {
+                "Number": "3",
+                "Description": "Bay leaves 2 "
+            },
+            {
+                "Number": "4",
+                "Description": "Ginger-garlic paste 1 tablespoon  "
+            },
+            {
+                "Number": "5",
+                "Description": "Red chilli powder 1 teaspoon  "
+            }
+        ],
+        "Method": [{
+                "Step": "Heat oil in a non-stick pan. Add torn bay leaves and sauté. Add onion paste and sauté till golden."
+            },
+            {
+                "Step": "Add ginger-garlic paste and sauté on medium heat for 30 seconds. Add tomato puree and mix."
+            },
+            {
+                "Step": "Add salt, turmeric powder, chilli powder, cumin powder and castor sugar, mix and cook for 7-8 minutes or till oil separates."
+            },
+            {
+                "Step": "Add some water and mix. Add potatoes and mix well. Reduce heat and cook for 4-5 minutes."
+            }
+        ],
+        "NutritionInfo": {
+            "Calories": "276 Kcal",
+            "Carbohydrates": "28.4 gm",
+            "Protein": "10.74 gm",
+            "Fat": "12.75 gm",
+            "Other": "3.23"
+        }
+    },
+
+    {
+
+        "RecipeName": "Aloo Matar Paneer",
+        "Description": "This recipe is a delicious mix of flavours, tastes and textures in each bite. When you want to make aloo matar a little fancy add paneer cubes to the preparation and what you get is this delicious aloo matar paneer. Potatoes, cottage cheese and green peas cooked in a flavourful onion and tomato based gravy. Aloo matar paneer couples very well with any Indian bread like parantha, roti, poori, phulka or even naan and tandoori roti.",
+        "PrepTime": "11-15 minutes",
+        "Cooktime": "11-15 minutes",
+        "Serve": 4,
+        "LevelOfCooking": "Moderate",
+        "Taste": "Mild",
+        "Ingredients": [{
+                "Number": "1",
+                "Description": "Potatoes peeled 2 medium "
+            },
+            {
+                "Number": "2",
+                "Description": "Green peas shelled 1 cup  "
+            },
+            {
+                "Number": "3",
+                "Description": "Paneer (cottage cheese) 100 grams "
+            },
+            {
+                "Number": "4",
+                "Description": "Onion 1 medium  "
+            },
+            {
+                "Number": "5",
+                "Description": "Ginger 1  "
+            },
+            {
+                "Number": "6",
+                "Description": "Oil 2 tablespoons  "
+            },
+            {
+                "Number": "7",
+                "Description": "Garlic 8-10 cloves  "
+            },
+            {
+                "Number": "8",
+                "Description": "Cumin seeds 2 teaspoons"
+            }
+        ],
+        "Method": [{
+                "Step": "Grind onion, garlic and ginger."
+            },
+            {
+                "Step": "Heat oil in a nine stick pan, add cumin seeds and sauté till lightly browned."
+            },
+            {
+                "Step": "Cut thin batons of potatoes. Add the ground paste to the pan and sauté till lightly browned, stirring frequently."
+            },
+            {
+                "Step": "Add potatoes, salt and turmeric powder and mix."
             }
         ],
         "NutritionInfo": {

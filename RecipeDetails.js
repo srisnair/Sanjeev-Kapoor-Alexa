@@ -9,7 +9,7 @@ const constants = require('./Constants');
 
 
 
-exports.searchRecipes = function(currentObj, callback) {
+exports.searchRecipes = function(currentObj,limit, callback) {
     console.log("Reading File");
     fs.readFile('./RecipeDetails.json', {
         encoding: 'utf8'
@@ -23,15 +23,19 @@ exports.searchRecipes = function(currentObj, callback) {
 			var count=0;
             for (var i = 0; i < recipeData.length; i++) {
                 //console.log("Inside for loop");
-                if (recipeData[i].RecipeName.toLowerCase().startsWith(handler.sharedObj.recipeNameOrIngredientName.toLowerCase())) {
+                if (recipeData[i].RecipeName.toLowerCase().startsWith(currentObj.attributes['recipeNameOrIngredientName'].toLowerCase())) {
                     searchedRecipes.push(recipeData[i].RecipeName);
+					console.log(currentObj.attributes['countMore']);
+					console.log(limit);
+					console.log(searchedRecipes);
 					count++;
                 } else {
                    // console.log("Sorry I don't know about this recipe");
                 }
-            }
+            }  
 			
-			  callback(searchedRecipes,count);
+			  console.log(searchedRecipes.slice(currentObj.attributes['countMore'],limit));
+			  callback(searchedRecipes.slice(currentObj.attributes['countMore'],limit).join(),count);
         }
 
     });
@@ -51,7 +55,7 @@ exports.getRecipeDetails = function(currentObj, callback) {
             var recipeData = JSON.parse(data);
             for (var i = 0; i < recipeData.length; i++) {
                 console.log("Inside for loop");
-                if (recipeData[i].RecipeName.toLowerCase() == handler.sharedObj.currentRecipeName.toLowerCase()) {
+                if (recipeData[i].RecipeName.toLowerCase() == currentObj.attributes['currentRecipeName'].toLowerCase()) {
                     var searchedRecipedata = recipeData[i];
                     callback(searchedRecipedata);
                 } else {

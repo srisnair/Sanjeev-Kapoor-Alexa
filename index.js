@@ -11,7 +11,6 @@ var Handlers = require('./Handlers');
 var handlers = Handlers.handlers;
 var Alexa = require('alexa-sdk');
 
-console.log(Handlers.sharedObj);
 
 exports.handler = function(event, context, callback) {
     var alexa = Alexa.handler(event, context);
@@ -21,3 +20,4 @@ exports.handler = function(event, context, callback) {
     alexa.execute();
     console.log('Ending execution with APP_ID=alexa.APP_ID');
 };
+
