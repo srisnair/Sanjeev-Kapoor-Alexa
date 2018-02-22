@@ -44,230 +44,262 @@ const newSessionRequestHandler = function() {
 
 const launchRequestHandler = function() {
     console.log('inside launch request handler');
-	if(currentContext[currentContext.length-1]=="LaunchRequest"){
-    currentContext.push("WelcomeIntent");
-    console.log(currentContext);
-	var speech = new ssml();
-    speech.say('Welcome to Sanjeev Kapoor. Get your favorite recipes from the most celebrated face of Indian cuisine.');
-	speech.pause('0.2s');
-	speech.say('say the word help anytime and I’ll be there to guide you.”');
-	speech.pause('0.2s');
-	speech.say('You can get details of our top recipes by saying the recipe name, for example Biryani, or by saying the recipe ingredients, for example Chicken');
-	speech.pause('0.2s');
-	speech.say('What would you like to make today?”');
-	var speechOutput = speech.ssml(true);
-	this.emit(":ask", speechOutput, speechOutput);
-	}else{
-		this.emit(':ask','Please tell me one main ingredient name like, Potato or Paneer or a recipe name like ‘Aloo Masala Chat’  or ’Palak Paneer’ etc.? So, what would you like?');
-		
-	}
-	
-	console.info("Ending launchRequestHandler()");
+    if (currentContext[currentContext.length - 1] == "LaunchRequest") {
+        currentContext.push("WelcomeIntent");
+        console.log(currentContext);
+        var speech = new ssml();
+        speech.say('Welcome to Sanjeev Kapoor. Get your favorite recipes from the most celebrated face of Indian cuisine.');
+        speech.pause('0.2s');
+        speech.say('say the word help anytime and I’ll be there to guide you.”');
+        speech.pause('0.2s');
+        speech.say('You can get details of our top recipes by saying the recipe name, for example Biryani, or by saying the recipe ingredients, for example Chicken');
+        speech.pause('0.2s');
+        speech.say('What would you like to make today?”');
+        var speechOutput = speech.ssml(true);
+        this.emit(":ask", speechOutput, speechOutput);
+    } else {
+        this.emit(':ask', 'Please tell me one main ingredient name like, Potato or Paneer or a recipe name like ‘Aloo Masala Chat’  or ’Palak Paneer’ etc.? So, what would you like?');
+
+    }
+
+    console.info("Ending launchRequestHandler()");
 
 };
 
-const userRepeatRecipeNameHandler = function(){
-	currentObj = this;
-	console.log('Inside userRepeatRecipeNameHandler');
-	currentContext.push("userRepeatRecipeNameHandler");
-	var currentRecipeName =currentObj.event.request.intent.slots.recipeName.value
-	sharedObj['currentRecipeName'] = currentRecipeName;
-	recipeDetails.getRecipeDetails(currentObj,function(recipeData){
-		currentObj.emit(':ask',recipeData.RecipeName+', '+recipeData.Description+'. It takes '+recipeData.PrepTime+' to prepare and'+recipeData.Cooktime+' to cook. It can be served to'+recipeData.Serve+' people. Do you want to hear the ingredients or go back to recipe options? ');
-	});
-	console.log(currentContext);
+const userRepeatRecipeNameHandler = function() {
+    currentObj = this;
+    console.log('Inside userRepeatRecipeNameHandler');
+    currentContext.push("userRepeatRecipeNameHandler");
+    var currentRecipeName = currentObj.event.request.intent.slots.recipeName.value
+    sharedObj['currentRecipeName'] = currentRecipeName;
+    recipeDetails.getRecipeDetails(currentObj, function(recipeData) {
+        currentObj.emit(':ask', recipeData.RecipeName + ', ' + recipeData.Description + '. It takes ' + recipeData.PrepTime + ' to prepare and' + recipeData.Cooktime + ' to cook. It can be served to' + recipeData.Serve + ' people. Do you want to hear the ingredients or go back to recipe options? ');
+    });
+    console.log(currentContext);
 }
 
-const getSearchedRecipes = function(currentObj,callback){
-	if(currentContext[currentContext.length-2]!="getSearchedRecipes"){
-		recipeDetails.searchRecipes(currentObj,function(recipesName,count){
-			callback(recipesName,count);
-		});
-	}else{
-		currentObj.emit(userRepeatRecipeNameHandler);
-	}
+const getSearchedRecipes = function(currentObj, callback) {
+    if (currentContext[currentContext.length - 2] != "getSearchedRecipes") {
+        recipeDetails.searchRecipes(currentObj, function(recipesName, count) {
+            callback(recipesName, count);
+        });
+    } else {
+        currentObj.emit(userRepeatRecipeNameHandler);
+    }
 };
 
-const hearSearchedRecipes = function(){
-	currentObj = this;
-	console.log('Inside hearSearchedRecipes');
-	currentContext.push('hearSearchedRecipes');
-	console.log(currentContext);
-	var recipeNameOrIngredientName =this.event.request.intent.slots.recipeOrIngredient.value;
-	sharedObj['recipeNameOrIngredientName'] = recipeNameOrIngredientName;
-	console.log(recipeNameOrIngredientName);
-	getSearchedRecipes(currentObj,function(recipesName,count){
-		if(count>1){
-			currentObj.emit(':ask','Here are our top '+count+'recipes for'+recipeNameOrIngredientName+', '+recipesName+', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
-		}else{
-			currentObj.emit(':ask','Here is our top'+count+'recipes for'+recipeNameOrIngredientName+', '+recipesName+', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
-		}
-	});
-	
-	
+const hearSearchedRecipes = function() {
+    currentObj = this;
+    console.log('Inside hearSearchedRecipes');
+    currentContext.push('hearSearchedRecipes');
+    console.log(currentContext);
+    var recipeNameOrIngredientName = this.event.request.intent.slots.recipeOrIngredient.value;
+    sharedObj['recipeNameOrIngredientName'] = recipeNameOrIngredientName;
+    console.log(recipeNameOrIngredientName);
+    getSearchedRecipes(currentObj, function(recipesName, count) {
+        if (count > 1) {
+            currentObj.emit(':ask', 'Here are our top ' + count + 'recipes for' + recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+        } else {
+            currentObj.emit(':ask', 'Here is our top' + count + 'recipes for' + recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+        }
+    });
+
+
 };
 
-const getIngredients = function(currentObj,callback){
-	var ingredients = [];
-	recipeDetails.getRecipeDetails(currentObj,function(recipeData){
-		console.log('Inside getRecipeDetails');
-		console.log(sharedObj.currentRecipeName);
-		for (var i = 0; i < recipeData.Ingredients.length; i++) {
+const getIngredients = function(currentObj, callback) {
+    var ingredients = [];
+    recipeDetails.getRecipeDetails(currentObj, function(recipeData) {
+        console.log('Inside getRecipeDetails');
+        console.log(sharedObj.currentRecipeName);
+        for (var i = 0; i < recipeData.Ingredients.length; i++) {
             ingredients.push(recipeData.Ingredients[i].Description);
         }
-		callback(ingredients.join());
-		
-		
-	});
+        callback(ingredients.join());
+
+
+    });
 };
 
-const hearIngredients = function(){
-	currentObj = this;
-	currentContext.push('hearIngredients');
-	console.log('Inside hearIngredients');
-	console.log(currentContext);
-	getIngredients(currentObj,function(ingredients){
-		var speech = new ssml();
-		speech.say('To make this recipe, you will need, '+ingredients);
-		speech.pause('0.5s');
-		speech.say('That completes the ingredient list. I have also sent the ingredient list to your companion app for reference');
-		speech.pause('0.2s');
-		speech.say('Shall I continue with instructions to make the recipe or repeat the ingredients?');
-		var speechOutput = speech.ssml(true);
-		var reprompt = 'Shall I continue with instructions to make the recipe or repeat the ingredients?';
-		currentObj.emit(':ask',speechOutput,reprompt);
-	});
+const hearIngredients = function() {
+    currentObj = this;
+    currentContext.push('hearIngredients');
+    console.log('Inside hearIngredients');
+    console.log(currentContext);
+    getIngredients(currentObj, function(ingredients) {
+        var speech = new ssml();
+        speech.say('To make this recipe, you will need, ' + ingredients);
+        speech.pause('0.5s');
+        speech.say('That completes the ingredient list. I have also sent the ingredient list to your companion app for reference');
+        speech.pause('0.2s');
+        speech.say('Shall I continue with instructions to make the recipe or repeat the ingredients?');
+        var speechOutput = speech.ssml(true);
+        var reprompt = 'Shall I continue with instructions to make the recipe or repeat the ingredients?';
+        currentObj.emit(':ask', speechOutput, reprompt);
+    });
 };
 
-const getRecipeInstructions = function(currentObj,callback){
-	var method = [];
-	recipeDetails.getRecipeDetails(currentObj,function(recipeData){
-		var countRecipeInstructions = 0;
+const getRecipeInstructions = function(currentObj, callback) {
+    var method = [];
+    recipeDetails.getRecipeDetails(currentObj, function(recipeData) {
+        var countRecipeInstructions = 0;
         for (var i = 0; i < recipeData.Method.length; i++) {
             method.push(recipeData.Method[i].Step);
-			countRecipeInstructions++;
-		}
-		console.log(countRecipeInstructions);
-		callback(method.join(),countRecipeInstructions);
-	
-		
-	});
-	
+            countRecipeInstructions++;
+        }
+        console.log(countRecipeInstructions);
+        callback(method.join(), countRecipeInstructions);
+
+
+    });
+
 };
 
-const continueIntentHandler = function(){
-	currentObj = this;
-	console.log('Inside continueIntentHandler');
-	currentContext.push('continueIntentHandler');
-	console.log(currentContext);
-	if(currentContext[currentContext.length-2]=="hearIngredients"){
-		currentContext.push('hearInstructions');
-		console.log(currentContext);
-		getRecipeInstructions(currentObj,function(recipeInstructions,countRecipeInstructions){
-		var speech = new ssml();
-		console.log(countRecipeInstructions);
-		console.log(recipeInstructions);
-		speech.say('Great. Let’s go over the recipe instructions');
-		speech.pause('0.2s');
-		speech.say(recipeInstructions);
-		speech.say('That completes the recipe instructions. I have also sent the instructions to your companion app for reference. Hope you enjoy making this recipe!');
-		speech.pause('0.2s');
-		speech.say('Do you want to search for a new recipe? I can also repeat the recipe instructions or go back to the start of this recipe');
-		var speechOutput = speech.ssml(true);
-		var reprompt = 'Do you want to search for a new recipe? I can also repeat the recipe instructions or go back to the start of this recipe';
-		currentObj.emit(':ask',speechOutput,reprompt);
-		});
-	}else{
-		this.emit(':ask','else part of continueIntentHandler');
-	}
+const continueIntentHandler = function() {
+    currentObj = this;
+    console.log('Inside continueIntentHandler');
+    currentContext.push('continueIntentHandler');
+    console.log(currentContext);
+    if (currentContext[currentContext.length - 2] == "hearIngredients") {
+        currentContext.push('hearInstructions');
+        console.log(currentContext);
+        getRecipeInstructions(currentObj, function(recipeInstructions, countRecipeInstructions) {
+            var speech = new ssml();
+            console.log(countRecipeInstructions);
+            console.log(recipeInstructions);
+            speech.say('Great. Let’s go over the recipe instructions');
+            speech.pause('0.2s');
+            speech.say(recipeInstructions);
+            speech.say('That completes the recipe instructions. I have also sent the instructions to your companion app for reference. Hope you enjoy making this recipe!');
+            speech.pause('0.2s');
+            speech.say('Do you want to search for a new recipe? I can also repeat the recipe instructions or go back to the start of this recipe');
+            var speechOutput = speech.ssml(true);
+            var reprompt = 'Do you want to search for a new recipe? I can also repeat the recipe instructions or go back to the start of this recipe';
+            currentObj.emit(':ask', speechOutput, reprompt);
+        });
+    } else {
+        this.emit(':ask', 'else part of continueIntentHandler');
+    }
 };
 
 
-const newRecipeHandler = function(){
-	currentContext.push("newRecipeHandler");
-	console.log('inside newRecipeHandler');
-	var speech = new ssml();
-	speech.say('You can get details of our top recipes by saying the recipe name or recipe ingredients');
-	speech.pause('0.2s');
-	speech.say('What would you like to make today?');
-	var speechOutput = speech.ssml(true);
-	var reprompt = 'Sorry, I didn’t hear anything, If you want to search the recipe by an ingredient like Potato or Paneer say  ‘search by an ingredient name’ or if you want something like ‘Aloo Masala’ or ‘Palak Paneer’ then say search by a ’recipe name’ ';
-	this.emit(':ask',speechOutput,reprompt);
-	
+const newRecipeHandler = function() {
+    console.log('inside newRecipeHandler');
+    console.log(currentContext);
+    if (currentContext[currentContext.length - 1] == "userRepeatRecipeNameHandler" || currentContext[currentContext.length - 1] == "hearInstructions") {
+        var speech = new ssml();
+        speech.say('You can get details of our top recipes by saying the recipe name or recipe ingredients');
+        speech.pause('0.2s');
+        speech.say('What would you like to make today?');
+        var speechOutput = speech.ssml(true);
+        var reprompt = 'Sorry, I didn’t hear anything, If you want to search the recipe by an ingredient like Potato or Paneer say  ‘search by an ingredient name’ or if you want something like ‘Aloo Masala’ or ‘Palak Paneer’ then say search by a ’recipe name’ ';
+        this.emit(':ask', speechOutput, reprompt);
+    } else {
+        this.emit(':ask', 'else part of newRecipeHandler');
+    }
+
+
 };
 
-const amazonRepeatHandler = function(){
-	currentObj = this;
-	console.log('Inside amazonRepeatHandler');
-	console.log(currentContext);
-	if(currentContext[currentContext.length-1]=="hearIngredients"){
-		console.log('Inside amazonRepeatHandler for Ingredients');
-		getIngredients(currentObj,function(ingredients){
-			var speech = new ssml();
-			speech.say('To make this recipe, you will need, '+ingredients);
-			speech.pause('0.5s');
-			speech.say('That completes the ingredient list. I have also sent the ingredient list to your companion app for reference');
-			speech.pause('0.2s');
-			speech.say('Shall I continue with instructions to make the recipe or repeat the ingredients?');
-			var speechOutput = speech.ssml(true);
-			var reprompt = 'Shall I continue with instructions to make the recipe or repeat the ingredients?';
-			console.log(currentContext);
-			currentObj.emit(':ask',speechOutput,reprompt);
-		});
-	}else if(currentContext[currentContext.length-1]=="hearInstructions"){
-		console.log('Inside amazonRepeatHandler for Instructions');
-		getRecipeInstructions(currentObj,function(recipeInstructions,countRecipeInstructions){
-			console.log(currentContext);
-			var speech = new ssml();
-			console.log(countRecipeInstructions);
-			console.log(recipeInstructions);
-			speech.say('Great. Let’s go over the recipe instructions');
-			speech.pause('0.2s');
-			speech.say(recipeInstructions);
-			speech.say('That completes the recipe instructions. I have also sent the instructions to your companion app for reference. Hope you enjoy making this recipe!');
-			speech.pause('0.2s');
-			speech.say('Do you want to search for a new recipe? I can also repeat the recipe instructions or go back to the start of this recipe');
-			var speechOutput = speech.ssml(true);
-			var reprompt = 'Do you want to search for a new recipe? I can also repeat the recipe instructions or go back to the start of this recipe';
-			currentObj.emit(':ask',speechOutput,reprompt);
-		});
-	}
-	
-	
+const amazonRepeatHandler = function() {
+    currentObj = this;
+    console.log('Inside amazonRepeatHandler');
+    console.log(currentContext);
+    if (currentContext[currentContext.length - 1] == "hearIngredients") {
+        console.log('Inside amazonRepeatHandler for Ingredients');
+        getIngredients(currentObj, function(ingredients) {
+            var speech = new ssml();
+            speech.say('To make this recipe, you will need, ' + ingredients);
+            speech.pause('0.5s');
+            speech.say('That completes the ingredient list. I have also sent the ingredient list to your companion app for reference');
+            speech.pause('0.2s');
+            speech.say('Shall I continue with instructions to make the recipe or repeat the ingredients?');
+            var speechOutput = speech.ssml(true);
+            var reprompt = 'Shall I continue with instructions to make the recipe or repeat the ingredients?';
+            console.log(currentContext);
+            currentObj.emit(':ask', speechOutput, reprompt);
+        });
+    } else if (currentContext[currentContext.length - 1] == "hearInstructions") {
+        console.log('Inside amazonRepeatHandler for Instructions');
+        getRecipeInstructions(currentObj, function(recipeInstructions, countRecipeInstructions) {
+            console.log(currentContext);
+            var speech = new ssml();
+            console.log(countRecipeInstructions);
+            console.log(recipeInstructions);
+            speech.say('Great. Let’s go over the recipe instructions');
+            speech.pause('0.2s');
+            speech.say(recipeInstructions);
+            speech.say('That completes the recipe instructions. I have also sent the instructions to your companion app for reference. Hope you enjoy making this recipe!');
+            speech.pause('0.2s');
+            speech.say('Do you want to search for a new recipe? I can also repeat the recipe instructions or go back to the start of this recipe');
+            var speechOutput = speech.ssml(true);
+            var reprompt = 'Do you want to search for a new recipe? I can also repeat the recipe instructions or go back to the start of this recipe';
+            currentObj.emit(':ask', speechOutput, reprompt);
+        });
+    } else if (currentContext[currentContext.length - 1] == "hearSearchedRecipes") {
+        getSearchedRecipes(currentObj, function(recipesName, count) {
+            if (count > 1) {
+                currentObj.emit(':ask', 'Here are our top ' + count + 'recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+            } else {
+                currentObj.emit(':ask', 'Here is our top' + count + 'recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+            }
+        });
+    }
+
+
 };
 
-const amazonPreviousHandler = function(){
-	console.log('inside amazonPreviousHandler');
-    currentContext.push("amazonPreviousHandler");
-	if(currentContext[currentContext.length-2]=="userRepeatRecipeNameHandler"){
-		
-	}
+const amazonPreviousHandler = function() {
+    currentObj = this;
+    console.log('inside amazonPreviousHandler');
+    if (currentContext[currentContext.length - 1] == "userRepeatRecipeNameHandler") {
+        getSearchedRecipes(currentObj, function(recipesName, count) {
+            if (count > 1) {
+                currentObj.emit(':ask', 'Here are our top ' + count + 'recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+            } else {
+                currentObj.emit(':ask', 'Here is our top' + count + 'recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+            }
+        });
+    }
     console.log(currentContext);
 };
 
-const amazonStartOverHandler = function(){
-	console.log('Inside amazonStartOverHandler');
-	console.log(currentContext);
-	
+const amazonStartOverHandler = function() {
+    currentObj = this;
+    console.log('Inside amazonStartOverHandler');
+    console.log(currentContext);
+    if (currentContext[currentContext.length - 1] == "hearInstructions") {
+        recipeDetails.getRecipeDetails(currentObj, function(recipeData) {
+            currentObj.emit(':ask', recipeData.RecipeName + ', ' + recipeData.Description + '. It takes ' + recipeData.PrepTime + ' to prepare and' + recipeData.Cooktime + ' to cook. It can be served to' + recipeData.Serve + ' people. Do you want to hear the ingredients or go back to recipe options? ');
+        });
+    }
+
 }
 
 
-const moreOptionsHandler = function(){
-	currentContext.push("moreOptionsHandler");
-	console.log('inside moreOptionsHandler');
-	
+const getMoreRecipes = function(currentObj, callback) {
+    recipeDetails.getRecipeDetails(this, function(recipesName, count) {
+        callback(recipesName.slice(4, recipesName.length), count);
+    });
+};
+
+const hearMoreRecipes = function() {
+    currentObj = this;
+    getMoreRecipes(currentObj, function(moreRecipes, count) {
+        currentObj.emit(':ask', 'Here are more recipes for' + sharedObj.recipeNameOrIngredientName + ', ' + moreRecipes + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+    });
 };
 
 
 const negativeResponseHandler = function() {
-	currentObj = this;
+    currentObj = this;
     console.log('inside negativeResponseHandler');
     console.log(currentContext);
-	if(currentContext[currentContext.length-1]=="hearInstructions"){
-		currentObj.emit(':tell','Thanks for using the Sanjeev Kapoor skill, I look forward to seeing you again soon!');
-	}else{
-		currentObj.emit('else part of negative intent');
-	}
+    if (currentContext[currentContext.length - 1] == "hearInstructions") {
+        currentObj.emit(':tell', 'Thanks for using the Sanjeev Kapoor skill, I look forward to seeing you again soon!');
+    } else {
+        currentObj.emit('else part of negative intent');
+    }
 
 };
 
@@ -276,20 +308,20 @@ const negativeResponseHandler = function() {
 const positiveResponseHandler = function() {
     console.log('inside positiveResponseHandler');
     console.log(currentContext);
-	if(currentContext[currentContext.length-1]=="hearInstructions"){
-		var speech = new ssml();
-		speech.say('You can get details of our top recipes by saying the recipe name or recipe ingredients');
-		speech.pause('0.2s');
-		speech.say('What would you like to make today?');
-		var speechOutput = speech.ssml(true);
-		var reprompt = 'Sorry, I didn’t hear anything, If you want to search the recipe by an ingredient like Potato or Paneer say  ‘search by an ingredient name’ or if you want something like ‘Aloo Masala’ or ‘Palak Paneer’ then say search by a ’recipe name’ ';
-		this.emit(':ask',speechOutput,reprompt);
-	}
+    if (currentContext[currentContext.length - 1] == "hearInstructions") {
+        var speech = new ssml();
+        speech.say('You can get details of our top recipes by saying the recipe name or recipe ingredients');
+        speech.pause('0.2s');
+        speech.say('What would you like to make today?');
+        var speechOutput = speech.ssml(true);
+        var reprompt = 'Sorry, I didn’t hear anything, If you want to search the recipe by an ingredient like Potato or Paneer say  ‘search by an ingredient name’ or if you want something like ‘Aloo Masala’ or ‘Palak Paneer’ then say search by a ’recipe name’ ';
+        this.emit(':ask', speechOutput, reprompt);
+    }
 };
 
 
 const amazonCancelHandler = function() {
-	intentRequest = [];
+    intentRequest = [];
     console.log('inside amazonCancelHandler');
     currentContext.push("amazonCancelHandler");
     this.emit(':ask', messages.CANCEL);
@@ -299,7 +331,7 @@ const amazonCancelHandler = function() {
 
 
 const amazonHelpHandler = function() {
-	intentRequest = [];
+    intentRequest = [];
     console.log('inside amazonHelpHandler');
     currentContext.push("amazonHelpHandler");
     this.emit(':ask', messages.HELP);
@@ -307,7 +339,7 @@ const amazonHelpHandler = function() {
 };
 
 const amazonStopHandler = function() {
-	intentRequest = [];
+    intentRequest = [];
     console.log('inside amazonStopHandler');
     currentContext.push("amazonStopHandler");
     this.emit(':tell', messages.STOP);
@@ -316,14 +348,14 @@ const amazonStopHandler = function() {
 
 
 const unhandledRequestHandler = function() {
-	intentRequest = [];
+    intentRequest = [];
     currentContext.push("unhandledRequestHandler");
     console.info("Starting unhandledRequestHandler");
-    
+
 };
 
 const sessionEndedRequestHandler = function() {
-    
+
     //this.emit(":tell", messages.GOODBYE);
     console.info("Ending sessionEndedRequestHandler()");
 };
@@ -346,8 +378,10 @@ handlers[intents.RecipeNameOrIngredientName] = hearSearchedRecipes;
 handlers[intents.UserRepeatRecipeName] = userRepeatRecipeNameHandler;
 handlers[intents.HearIngredients] = hearIngredients;
 handlers[intents.NewRecipe] = newRecipeHandler;
+handlers[intents.HearMoreRecipes] = hearMoreRecipes;
 handlers[intents.ContinueIntent] = continueIntentHandler;
 handlers[intents.AmazonRepeatIntent] = amazonRepeatHandler;
+handlers[intents.AmazonPreviousIntent] = amazonPreviousHandler;
 handlers[intents.AmazonStartOverIntent] = amazonStartOverHandler;
 handlers[intents.AmazonCancelIntent] = amazonCancelHandler;
 handlers[intents.AmazonStopIntent] = amazonStopHandler;

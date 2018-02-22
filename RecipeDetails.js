@@ -19,12 +19,12 @@ exports.searchRecipes = function(currentObj, callback) {
             currentObj.emit(':tell', 'Sorry there is error in reading JSON file.');
         } else {
             var recipeData = JSON.parse(data);
-		    var searchedRecipes = "";
+		    var searchedRecipes = [];
 			var count=0;
             for (var i = 0; i < recipeData.length; i++) {
                 //console.log("Inside for loop");
                 if (recipeData[i].RecipeName.toLowerCase().startsWith(handler.sharedObj.recipeNameOrIngredientName.toLowerCase())) {
-                    searchedRecipes += recipeData[i].RecipeName+',';
+                    searchedRecipes.push(recipeData[i].RecipeName);
 					count++;
                 } else {
                    // console.log("Sorry I don't know about this recipe");

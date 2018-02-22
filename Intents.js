@@ -18,6 +18,7 @@ const RecipeNameOrIngredientName = "RecipeNameOrIngredientName";
 const UserRepeatRecipeName = "UserRepeatRecipeName";
 const HearIngredients = "HearIngredients";
 const NewRecipe = "NewRecipe";
+const HearMoreRecipes = "HearMoreRecipes";
 /**
  * This is an Amazon built-in intent.
  */
@@ -37,7 +38,7 @@ const PositiveIntent = "AMAZON.YesIntent";
 /**
  * This is an Amazon built-in intent.
  */
-const PreviousIntent = "AMAZON.PreviousIntent";
+const AmazonPreviousIntent = "AMAZON.PreviousIntent";
 
 /**
  * This is an Amazon built-in intent.
@@ -66,9 +67,10 @@ module.exports = {
 	"HearIngredients": HearIngredients,
     "ContinueIntent": ContinueIntent,
 	"NewRecipe": NewRecipe,
+	"HearMoreRecipes": HearMoreRecipes,
     "PositiveIntent": PositiveIntent,
     "NegativeIntent": NegativeIntent,
-	"PreviousIntent": PreviousIntent,
+	"AmazonPreviousIntent": AmazonPreviousIntent,
 	"AmazonStartOverIntent": AmazonStartOverIntent,
     "AmazonRepeatIntent": AmazonRepeatIntent,
     "AmazonHelpIntent": AmazonHelpIntent,
