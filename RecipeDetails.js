@@ -9,7 +9,7 @@ const constants = require('./Constants');
 
 
 
-exports.searchRecipes = function(currentObj,limit, callback) {
+exports.searchRecipes = function(currentObj, callback) {
     console.log("Reading File");
     fs.readFile('./RecipeDetails.json', {
         encoding: 'utf8'
@@ -21,21 +21,22 @@ exports.searchRecipes = function(currentObj,limit, callback) {
             var recipeData = JSON.parse(data);
 		    var searchedRecipes = [];
 			var count=0;
+			
             for (var i = 0; i < recipeData.length; i++) {
                 //console.log("Inside for loop");
                 if (recipeData[i].RecipeName.toLowerCase().startsWith(currentObj.attributes['recipeNameOrIngredientName'].toLowerCase())) {
                     searchedRecipes.push(recipeData[i].RecipeName);
 					console.log(currentObj.attributes['countMore']);
-					console.log(limit);
+					
 					console.log(searchedRecipes);
 					count++;
                 } else {
                    // console.log("Sorry I don't know about this recipe");
                 }
             }  
-			
-			  console.log(searchedRecipes.slice(currentObj.attributes['countMore'],limit));
-			  callback(searchedRecipes.slice(currentObj.attributes['countMore'],limit).join(),count);
+			 
+			  console.log(searchedRecipes.slice(currentObj.attributes['countMore'],currentObj.attributes['offsetLimit']));
+			  callback(searchedRecipes.slice(currentObj.attributes['countMore'],currentObj.attributes['offsetLimit']),count);
         }
 
     });

@@ -69,7 +69,7 @@ const userRepeatRecipeNameHandler = function() {
     currentObj = this;
     console.log(currentObj);
     console.log(currentObj.event.session);
-    currentObj.attributes['currentRecipeName'] = currentObj.event.request.intent.slots.recipeName.value;
+    currentObj.attributes['currentRecipeName'] = this.event.request.intent.slots.recipeName.value;
     console.log(currentObj.attributes['currentRecipeName'].toString());
     console.log('Inside userRepeatRecipeNameHandler');
     currentContext.push("userRepeatRecipeNameHandler");
@@ -88,8 +88,10 @@ const hearSearchedRecipes = function() {
     currentContext.push('hearSearchedRecipes');
     console.log(currentContext);
     currentObj.attributes['countMore'] = 0;
+	currentObj.attributes['offsetLimit'] =4;
     currentObj.attributes['recipeNameOrIngredientName'] = currentObj.event.request.intent.slots.recipeOrIngredient.value;
-		recipeDetails.searchRecipes(currentObj, limit, function(recipesName, count) {
+	console.log(limit);
+		recipeDetails.searchRecipes(currentObj, function(recipesName, count) {
 			currentObj.emit(':ask', 'Here are our top  4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
 		});
 
@@ -102,7 +104,6 @@ const getIngredients = function(currentObj, callback) {
     var ingredients = [];
     recipeDetails.getRecipeDetails(currentObj, function(recipeData) {
         console.log('Inside getRecipeDetails');
-        console.log(sharedObj.currentRecipeName);
         for (var i = 0; i < recipeData.Ingredients.length; i++) {
             ingredients.push(recipeData.Ingredients[i].Description);
         }
@@ -229,13 +230,15 @@ const amazonRepeatHandler = function() {
             currentObj.emit(':ask', speechOutput, reprompt);
         });
     } else if (currentContext[currentContext.length - 1] == "hearSearchedRecipes") {
-        getSearchedRecipes(currentObj, function(recipesName, count) {
-            if (count > 1) {
-                currentObj.emit(':ask', 'Here are our top 4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
-            } else {
-                currentObj.emit(':ask', 'Here is our top' + count + 'recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
-            }
-        });
+		recipeDetails.searchRecipes(currentObj, limit, function(recipesName, count) {
+			if(limit==4){
+				currentObj.emit(':ask', 'Here are our top  4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+
+			}else{
+				currentObj.emit(':ask', 'Here are more 4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + recipesName + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+
+			}
+		});
     }
 
 
@@ -274,9 +277,16 @@ const amazonStartOverHandler = function() {
 const hearMoreRecipes = function() {
     currentObj = this;
     currentObj.attributes['countMore'] += 4;
-    limit += 4;
-    recipeDetails.searchRecipes(currentObj, limit, function(searchedRecipes, count) {
-		currentObj.emit(':ask', 'Here are more 4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + searchedRecipes + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+	
+	currentObj.attributes['offsetLimit']+= limit;
+   // limit += 4;
+    recipeDetails.searchRecipes(currentObj, function(searchedRecipes, count) {
+		if(searchedRecipes.length>0){
+		currentObj.emit(':ask', 'Here are more 4 recipes for' + currentObj.attributes['recipeNameOrIngredientName'] + ', ' + searchedRecipes.join() + ', You can choose any of these dishes for recipe details, or hear more recipe options. What would you like to do?');
+		}
+		else {
+			currentObj.emit(':ask','To get more recipes for recipe name, please visit the Sanjeev Kapoor website or app, Can I help you with anything else');
+		}
            
     });
 
